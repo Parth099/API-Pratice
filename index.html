@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+  </head>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;1,100;1,200;1,300&display=swap");
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: linear-gradient(270deg, #32de84, #89cff0);
+      background-size: 400% 400%;
+
+      animation: gradBkgrd 5s ease infinite;
+    }
+
+    @keyframes gradBkgrd {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    .main-content {
+      border: 1px solid black;
+      max-width: 550px;
+      padding: 8px 14px;
+      margin: 0 auto;
+      background-color: rgb(255, 255, 255);
+      border-radius: 10px;
+      margin-top: 50px;
+    }
+    .api-img {
+      max-width: 100%;
+      text-align: center;
+    }
+    .image-cont {
+      display: flex;
+      justify-content: center;
+    }
+    .search-text {
+      font-size: 45px;
+      font-family: "Urbanist", sans-serif;
+      font-weight: 200;
+      color: grey;
+    }
+    .input-cont {
+      display: flex;
+      flex-direction: column;
+    }
+    .search-input {
+      width: 100%;
+      border: none;
+      border-bottom: 2px solid grey;
+      outline: none;
+
+      font-size: 25px;
+      font-family: "Urbanist", sans-serif;
+      font-weight: 200;
+
+      margin-bottom: 10px;
+      padding: 4px 0px;
+    }
+    footer {
+      background-color: black;
+      color: white;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 3px;
+      text-align: center;
+    }
+    .error {
+      font-size: 15px;
+      font-family: "Urbanist", sans-serif;
+      font-weight: bold;
+      display: block;
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
+  <body>
+    <div class="main-content">
+      <div class="input-cont">
+        <label for="search" class="search-text"> Search <b>GIPHY</b>: </label>
+        <input type="text" id="search" class="search-input" minlength="2" />
+      </div>
+      <div class="image-cont">
+        <img src="#" id="dist" class="api-img" alt="A Gif Will Appear here" />
+      </div>
+      <p class="error" id="error"></p>
+    </div>
+    <footer>
+      <div class="ft-text">This page is simply practice for APIs &amp; promises</div>
+    </footer>
+  </body>
+  <script>
+    const img = document.querySelector("#dist");
+    const apiKey = "kWr5BghcPEBf2o5AbaQzzZViQ6ho0SSq"; //uh oh
+    const searchInput = document.querySelector("#search");
+    const errorPane = document.querySelector("#error");
+
+    searchInput.addEventListener("input", function (evt) {
+      const evtSearchValue = evt.target.value;
+      fetch(`https://api.giphy.com/v1/gifs/translate?api_key=${apiKey}&s=${evtSearchValue}`, { mode: "cors" })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (response) {
+          if (response.data.images) {
+            img.src = response.data.images.original.url;
+          } else {
+            img.src = "#";
+            img.alt = "Search for a gif!";
+          }
+        })
+        .catch((err) => {
+          errorPane.textContent = "An Error has occured please try again :)";
+          console.error(err);
+        });
+    });
+  </script>
+</html>
