@@ -107,7 +107,6 @@
     const searchInput = document.querySelector("#search");
     const errorPane = document.querySelector("#error");
 
-
     searchInput.addEventListener("input", function (evt) {
       const evtSearchValue = evt.target.value;
       fetch(`https://api.giphy.com/v1/gifs/translate?api_key=${apiKey}&s=${evtSearchValue}`, { mode: "cors" })
@@ -129,11 +128,11 @@
         });
     });
 
-    //report: 
+    //report:
     /*
         Fetch is a promoise based HTTP caller. Tries to call the GIFIY api and returns a Response Object.
         A responce object represents the response to a request. It gets read to completion with .json(). Then action is taken with the 
-        read object by the event. 
+        read object by the event. RM! 
     */
   </script>
 </html>
